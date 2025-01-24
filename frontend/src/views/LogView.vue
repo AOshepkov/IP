@@ -43,6 +43,13 @@ let Err = ref('')
 
 async function SendReq() {
   try {
+    if (!login.value) {
+      Err.value = 'Введите логин'
+      return
+    } else if (!password.value) {
+      Err.value = 'Введите пароль'
+      return
+    }
     const res = await axios.post('/log',{
       login: login.value,
       password: password.value
@@ -52,8 +59,9 @@ async function SendReq() {
     store.SetToken(res.data.token)
     router.push({name:'home'})
   } catch (err) {
-    Err.value = err.response.data.message
-    console.log(Err.value)
+    const serverError = err.response.data
+    if (serverError.type == 'array') {Err.value = serverError.message[0].msg
+    } else if (serverError.type == 'string') {Err.value = serverError.message}
   }
 }
 </script>

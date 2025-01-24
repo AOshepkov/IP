@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import session from "express-session";
 
-import { regValidator, handleValidationErrors, checkAuth, checkSession } from "./Utilites/middleware.js";
-import { logAdd, userGetInfo, userLog, userReg } from "./Utilites/RouteFunc.js";
-import { sessionKey } from "./Utilites/jwtKey.js";
+import { userValidator, handleValidationErrors, checkAuth, checkSession } from "./Utilites/middleware.js";
+import { logAdd, userGetInfo, userLog, userReg } from "./Utilites/routeFunc.js";
+import { sessionKey } from "./Utilites/utilKeys.js";
 
 mongoose.connect(
     'mongodb+srv://admin:oShell_125791@cluster0.u9q6i.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0'
@@ -22,8 +22,8 @@ app.use(session({
     }
 }))
 
-app.post('/reg', regValidator, handleValidationErrors, userReg )
-app.post('/log', handleValidationErrors, userLog)
+app.post('/reg', userValidator, handleValidationErrors, userReg )
+app.post('/log', userValidator,handleValidationErrors, userLog)
 app.get('/me', checkSession, userGetInfo)
 app.post('/addlog', checkAuth, logAdd)
 

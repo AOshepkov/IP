@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { body,validationResult } from "express-validator";
-import { jwtKey } from './jwtKey';
+import { jwtKey } from './utilKeys.js'
 
-export const regValidator = [
+export const userValidator = [
     body('password','Пароль должен содержать минимум 5 символов').isLength({min:5}),
     body('login','Логин должен содержать минимум 5 символов').isLength({min:5}),
 ]
@@ -10,7 +10,7 @@ export const regValidator = [
 export const handleValidationErrors = (req,res,next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        return res.status(400).json(errors.array())
+        return res.status(400).json({type: 'array', message: errors.array()})
     }
     next()
 }

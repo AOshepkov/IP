@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RegView from '@/views/RegView.vue'
 import LogView from '@/views/LogView.vue'
-import ExcercisesVue from '@/views/exs/ExcercisesVue.vue'
+import ExcercisesVue from '@/views/exs/ExcercisesView.vue'
 import ExrcTable from '@/views/exs/ExrcTable.vue'
 import ExrcPair from '@/views/exs/ExrcPair.vue'
 import ExrcNum from '@/views/exs/ExrcNum.vue'
@@ -62,10 +62,11 @@ const router = createRouter({
     },
   ],
 })
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
   const userStore = useAccountStore()
   let token = computed(() => userStore.token)
   if (!token.value && !['home','reg','log'].includes(to.name)) return { name: 'log' }
+  if (['excrc_table','excrc_pair','excrc_num','excrc_geom','excrc_types'].includes(to.name) && from.name != 'excrcs') return { naem:'home' }
 })
 
 export default router

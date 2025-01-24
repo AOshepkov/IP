@@ -20,14 +20,23 @@
       >
         {{ name[0] }}
       </div>
-      <button
-        class="button"
-        style="border-radius: 8px; margin: 0px 10px"
-        @click="router.push({ name: 'log' })"
-        v-if="!store.isLogined()"
-      >
-        log in
-      </button>
+      <div v-if="!store.isLogined()">
+        <button
+          class="button"
+          style="border-radius: 8px; margin: 0px 10px; height:30px"
+          @click="router.push({ name: 'log' })"
+        >
+          log in
+        </button>
+        or
+        <button
+          class="button"
+          style="border-radius: 8px; margin: 0px 10px; height:30px"
+          @click="router.push({ name: 'reg' })"
+        >
+          sign up
+        </button>
+      </div>
       <button class="button" style="border-radius: 8px; margin: 0px 10px" v-if="store.isLogined()" @click="Exit()">Exit</button>
     </div>
   </div>

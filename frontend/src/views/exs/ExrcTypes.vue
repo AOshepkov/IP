@@ -37,13 +37,13 @@
               v-if="cell.en == true"
               class="excrc5_cell2"
               :class="{
-                num: cell.mode == 'num' && cell.st < 2,
-                col: cell.mode == 'col' && cell.st < 2,
-                invisible: cell.st > 1,
+                num: cell.mode == 'num' && cell.st < 1,
+                col: cell.mode == 'col' && cell.st < 1,
+                invisible: cell.st >= 1,
               }"
               :style="{
                 'background-color':
-                  cell.col.repeat(cell.st < 2) + '#d0d0d0'.repeat(cell.st > 1),
+                  cell.col.repeat(cell.st < 1) + '#d0d0d0'.repeat(cell.st >= 1),
               }"
             >
               {{ cell.num }}
@@ -79,7 +79,7 @@ let stage = ref(0)
 let mist = ref(0)
 let mistakes = ref(0)
 let interval = 0
-let time = ref(15000)
+let time = ref(1500000)
 let sec = ref(15000)
 let combo = ref(0)
 let prev = ref({ num: [], col: [] })

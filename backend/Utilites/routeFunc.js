@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserModel from '../Models/User.js'
 import ExcrcLogSchema from '../Models/Logs.js'
+import { jwtKey } from './utilKeys.js';
 
 export const userReg = async (req,res) => {
     try {
@@ -27,6 +28,7 @@ export const userReg = async (req,res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({
+            type: 'string',
             message: 'Не удалось зарегистрироваться'
         })
     }
@@ -37,12 +39,14 @@ export const userLog = async (req,res) => {
         const user = await UserModel.findOne({login:req.body.login})
         if (!user) {
             return res.status(404).json({
+                type:'string',
                 message:'Неверный логин или пароль'
             })
         }
         const isValidPass = await bcrypt.compare(req.body.password,user._doc.password)
         if (!isValidPass) {
             return res.status(404).json({
+                type: 'string',
                 message:'Неверный логин или пароль'
             })
         }
@@ -57,7 +61,8 @@ export const userLog = async (req,res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({
-            message: 'Не удалось зарегистрироваться'
+            type: 'string',
+            message: 'Не удалось войти в аккаунт'
         })
     }
 }

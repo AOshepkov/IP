@@ -62,7 +62,11 @@ async function SendReq() {
     store.SetToken(res.data.token)
     router.push({name:'home type="password"'})
   } catch (err) {
-    Err.value = err.response.data[0].msg
+    const serverError = err.response.data
+    if (serverError.type == 'array') {Err.value = serverError.message[0].msg
+    } else if (serverError.type == 'string') {Err.value = serverError.message} else {
+      console.log(serverError)
+    }
   }
 }
 </script>
@@ -78,8 +82,8 @@ async function SendReq() {
   align-self: center;
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 24px);
+  height: calc(100% - 96px);
   filter: blur(10px);
 }
 .maintext {

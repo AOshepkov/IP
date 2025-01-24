@@ -106,7 +106,7 @@ function Render(x, y) {
       return 1
     }
     if (click.value == size.height * size.width) {
-      Win()
+      Stop()
     }
   } else {
     if (
@@ -118,7 +118,7 @@ function Render(x, y) {
       return 2
     }
     if (click.type == 2 && click.value == 1) {
-      Win()
+      Stop()
     }
   }
   clicks.push(click)
@@ -130,7 +130,7 @@ function Mistake(x, y) {
   setTimeout(() => (Excrc[y][x].mistake = false), 250)
   mistakes.value++
 }
-async function Win() {
+async function Stop() {
   clearInterval(interval)
   isWin.value = true
   try {
